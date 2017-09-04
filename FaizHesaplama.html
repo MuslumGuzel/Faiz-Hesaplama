@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Faiz Getiri Tablo</title>
+	<meta charset="utf-8" />
+    <script type="text/javascript">
+        function hesapla(A,n,t) {
+            var gelirVergiOran = 0.15;
+
+            var brutTutar = (A * n * t) / 36000;
+            var vergiTutar = brutTutar * gelirVergiOran;
+            var netTutar = brutTutar - vergiTutar;
+
+            var obj = {
+                Anapara : A,
+                brutFaizTutar: brutTutar,
+                faizVergiTutar: vergiTutar,
+                faizNetTutar: netTutar,
+                AnaNetTutar: A + netTutar
+            };
+
+            return obj;
+        }
+
+        function htmlWriter(table, data, counter) {
+            return table = '<tr><td>' + data.Anapara.toFixed(2) + '</td><td>' + data.brutFaizTutar.toFixed(2) + '</td><td>' + data.faizVergiTutar.toFixed(2)
+                + '</td><td>' + data.faizNetTutar.toFixed(2) + '</td><td>' + data.AnaNetTutar.toFixed(2) + '</td><td>' + counter + '</tr>';
+            //return table = '<tr><td>' + data.toFixed(2) + '</td></tr>';
+        }
+
+
+        function gunHesapla() {
+            var A = 18641 + 9180 + 4000 + 3600;
+            var n = 6;
+            var t = 1;
+            var result;
+            var ilkTutar = A;
+
+            var table = '<table border="1">';
+            for (var i = 0; i < 118; i++) {
+                result = hesapla(A, n, t);
+                A = result.AnaNetTutar;
+                table += htmlWriter(table, result, i+1);
+            }
+            table += '</table>';
+
+            var netKazanc = '<div>' + (A - ilkTutar).toFixed(2) + '<div>';
+            table += netKazanc;
+            div1.innerHTML = table;
+        }
+    </script>
+</head>
+<body onload="gunHesapla();">
+    <div id="div1">
+
+    </div>
+</body>
+</html>
